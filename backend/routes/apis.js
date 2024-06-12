@@ -9,7 +9,7 @@ const { check, validationResult } = require("express-validator");
 const passwordHash = require("password-hash");
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "HI" });
+  res.render("index", { title: "API" });
 });
 
 router.get("/news", news.getAllNews);
