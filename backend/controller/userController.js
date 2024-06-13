@@ -67,4 +67,91 @@ module.exports = {
         .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
     }
   },
+  addUser(req, res) {
+    let { user_name, user_email, password, role_id } = req.body;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `INSERT INTO users (user_name, user_email, password, role_id) VALUES ('${user_name}', '${user_email}', '${password}', '${role_id}')`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              res.json({
+                data: rows,
+                message: "User has been added",
+              });
+            }
+          }
+        );
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+    }
+  },
+
+  updateUser(req, res) {
+    let { user_name, user_email, password, role_id } = req.body;
+    let search = req.params.query;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `UPDATE users SET user_name = '${user_name}', user_email = '${user_email}', password = '${password}', role_id = '${role_id}' WHERE user_id = ${search}`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              res.json({
+                data: rows,
+                message: "User has been updated",
+              });
+            }
+          }
+        );
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+    }
+  },
+
+  deleteUser(req, res) {
+    let search = req.params.query;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `DELETE FROM users WHERE user_id = ${search}`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              res.json({
+                data: rows,
+                message: "User has been deleted",
+              });
+            }
+          }
+        );
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+    }
+  },
 };

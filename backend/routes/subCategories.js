@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Sub Category" });
 });
 router.get("/:id", subCategory.getSubCategoryById);
-router.post("/insert", subCategory.insertSubCategory);
+router.post("/insert", subCategory.addSubCategory);
 router.put("/update", subCategory.updateSubCategory);
 router.delete("/delete", subCategory.deleteSubCategory);
 

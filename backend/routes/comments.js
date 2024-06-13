@@ -7,8 +7,8 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Comments" });
 });
 router.get("/:id", comment.getCommentById);
-router.post("/insert", comment.insertComment);
-router.put("/update", comment.updateComment);
-router.delete("/delete", comment.deleteComment);
+// router.post("/insert", comment.insertComment);
+// router.put("/update", comment.updateComment);
+// router.delete("/delete", comment.deleteComment);
 
 module.exports = router;
