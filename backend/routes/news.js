@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 router.get("/:id", news.getNewsById);
-router.post("/insert", news.insertNews);
+router.post("/insert", news.addNews);
 router.put("/update", news.updateNews);
 router.delete("/delete", news.deleteNews);
 

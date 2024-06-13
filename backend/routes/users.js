@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 router.get("/:id", user.getUserById);
-router.post("/insert", user.insertUser);
+router.post("/insert", user.addUser);
 router.put("/update", user.updateUser);
 router.delete("/delete", user.deleteUser);
 

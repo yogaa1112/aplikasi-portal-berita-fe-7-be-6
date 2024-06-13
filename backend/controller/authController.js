@@ -1,3 +1,4 @@
+const { check } = require("express-validator");
 const connection = require("../config/db");
 let mysql = require("mysql");
 let pool = mysql.createPool(connection);
@@ -8,8 +9,15 @@ pool.on("error", (err) => {
 
 module.exports = {
   loginUser(req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
+    let email = check("email").isEmail().normalizeEmail();
+    let password = check("password").isLength({ min: 5 });
+
+    if (!email || !password)
+      return res.status(400).json({
+        error: "BAD_REQUEST",
+        message: "Email and Password is required",
+      });
+
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
@@ -17,7 +25,7 @@ module.exports = {
           `SELECT u.user_name, u.password 
           FROM users u
           WHERE 
-          u.username = '${username}' AND u.password = '${password}'`,
+          u.user_email = '${email}' AND u.password = '${password}'`,
           (error, rows) => {
             if (error) {
               req.status(404).json({
@@ -47,9 +55,15 @@ module.exports = {
     }
   },
   registerUser(req, res) {
-    let username = req.body.username;
-    let email = req.body.email;
-    let password = req.body.password;
+    let username = check("username").isLength({ min: 5 });
+    let email = check("email").isEmail().normalizeEmail();
+    let password = check("password").isLength({ min: 5 });
+
+    if (!username || !email || !password)
+      return res.status(400).json({
+        error: "BAD_REQUEST",
+        message: "Username, Email and Password is required",
+      });
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
@@ -97,5 +111,11 @@ module.exports = {
         .status(500)
         .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
     }
+  },
+
+  logoutUser(req, res) {
+    res.json({
+      message: "Logout success",
+    });
   },
 };
