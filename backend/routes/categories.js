@@ -3,12 +3,10 @@ var router = express.Router();
 let category = require("../controller/categoryController");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Category" });
-});
+router.get("/", category.getAllCategory);
 router.get("/:id", category.getCategoryById);
 router.post("/insert", category.addCategory);
-router.put("/update", category.updateCategory);
-router.delete("/delete", category.deleteCategory);
+router.put("/update/:id", category.updateCategory);
+router.delete("/delete/:id", category.deleteCategory);
 
 module.exports = router;

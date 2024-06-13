@@ -9,10 +9,10 @@ pool.on("error", (err) => {
 
 module.exports = {
   loginUser(req, res) {
-    let email = check("email").isEmail().normalizeEmail();
-    let password = check("password").isLength({ min: 5 });
+    let user_email = req.body.user_email;
+    let password = req.body.password;
 
-    if (!email || !password)
+    if (!user_email || !password)
       return res.status(400).json({
         error: "BAD_REQUEST",
         message: "Email and Password is required",
@@ -22,10 +22,10 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT u.user_name, u.password 
+          `SELECT u.user_name 
           FROM users u
           WHERE 
-          u.user_email = '${email}' AND u.password = '${password}'`,
+          u.user_email = '${user_email}' AND u.password = SHA1('${password}')`,
           (error, rows) => {
             if (error) {
               req.status(404).json({
@@ -36,7 +36,7 @@ module.exports = {
               if (rows.length === 0) {
                 res.status(404).json({
                   error: "USER_NOT_FOUND",
-                  message: `User was not found`,
+                  message: `Email or Password is Incorrect`,
                 });
               } else {
                 res.json({
@@ -54,54 +54,55 @@ module.exports = {
         .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
     }
   },
-  registerUser(req, res) {
-    let username = check("username").isLength({ min: 5 });
-    let email = check("email").isEmail().normalizeEmail();
-    let password = check("password").isLength({ min: 5 });
 
-    if (!username || !email || !password)
+  registerUser(req, res) {
+    let user_name = req.body.user_name;
+    let user_email = req.body.user_email;
+    let password = req.body.password;
+
+    if (!user_name || !user_email || !password)
       return res.status(400).json({
         error: "BAD_REQUEST",
-        message: "Username, Email and Password is required",
+        message: "Name, Email and Password is required",
       });
+
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT u.user_name, u.user_email
+          `SELECT u.user_email
           FROM users u
-          WHERE u.user_name = '${username}' OR u.user_email = '${email}'`,
+          WHERE u.user_email = '${user_email}'`,
           (error, rows) => {
             if (error) {
-              req.status(404).json({
+              res.status(404).json({
                 error: "ERROR",
                 message: `There's something wrong with the Server`,
               });
             } else {
               if (rows.length > 0) {
                 res.status(404).json({
-                  error: "USER_ALREADY_EXIST",
-                  message: `User already exist`,
+                  error: "EMAIL_EXIST",
+                  message: `Email already exist`,
                 });
-                return;
+              } else {
+                conn.query(
+                  `INSERT INTO users (user_name, user_email, password)
+                  VALUES ('${user_name}', '${user_email}', SHA1('${password}'))`,
+                  (error, rows) => {
+                    if (error) {
+                      req.status(404).json({
+                        error: "ERROR",
+                        message: `There's something wrong with the Server`,
+                      });
+                    } else {
+                      res.json({
+                        message: "Register success",
+                      });
+                    }
+                  }
+                );
               }
-            }
-          }
-        );
-        conn.query(
-          `INSERT INTO users (user_name, user_email, password) 
-          VALUES ('${username}', '${email}', '${password}')`,
-          (error, rows) => {
-            if (error) {
-              req.status(404).json({
-                error: "ERROR",
-                message: `There's something wrong with the Server`,
-              });
-            } else {
-              res.json({
-                data: rows,
-                message: "User has been registered",
-              });
             }
           }
         );
