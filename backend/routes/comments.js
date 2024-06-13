@@ -3,12 +3,10 @@ var router = express.Router();
 let comment = require("../controller/commentController");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Comments" });
-});
+router.get("/", comment.getAllComment);
 router.get("/:id", comment.getCommentById);
-// router.post("/insert", comment.insertComment);
-// router.put("/update", comment.updateComment);
-// router.delete("/delete", comment.deleteComment);
+router.post("/insert", comment.addComment);
+router.put("/update/:id", comment.updateComment);
+router.delete("/delete/:id", comment.deleteComment);
 
 module.exports = router;

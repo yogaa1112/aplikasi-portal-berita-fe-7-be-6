@@ -1,3 +1,4 @@
+const { check } = require("express-validator");
 const connection = require("../config/db");
 let mysql = require("mysql");
 let pool = mysql.createPool(connection);
@@ -12,7 +13,8 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          "SELECT c.*, u.user_name FROM categories c JOIN users u ON c.user_id = u.user_id",
+          `SELECT c.*, u.user_name
+          FROM categories c JOIN users u ON c.user_id = u.user_id`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -40,8 +42,8 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT c.* FROM categories c 
-          JOIN users u ON c.user_id = u.user_id
+          `SELECT c.*, u.user_name
+          FROM categories c JOIN users u ON c.user_id = u.user_id
           WHERE 
           c.category_id = ${search}`,
           (error, rows) => {
@@ -73,27 +75,34 @@ module.exports = {
   },
 
   addCategory(req, res) {
-    let data = {
-      categories_name: req.body.categories_name,
-      categories_code: req.body.categories_code,
-      categories_description: req.body.categories_description,
-      user_id: req.body.user_id,
-    };
+    let categories_name = req.body.categories_name;
+    let categories_code = req.body.categories_code;
+    let categories_desc = req.body.categories_desc;
+    let user_id = req.body.user_id;
+
+    if (!categories_name || !categories_code || !categories_desc || !user_id)
+      return res.status(400).json({
+        error: "BAD_REQUEST",
+        message:
+          "Category Name, Category Code, Description and User ID is required",
+      });
+
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          "INSERT INTO categories (category_name, category_code, description, user_id) VALUES ?",
-          data,
+          `INSERT INTO categories (category_name, category_code, description, user_id)
+          VALUES ('${categories_name}', '${categories_code}', '${categories_desc}', '${user_id}')`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
                 error: "ERROR",
-                message: `Input Category failed`,
+                message: `Input Category Failed`,
               });
             } else {
               res.json({
                 data: rows,
+                message: "Input Category Success",
               });
             }
           }
@@ -107,28 +116,78 @@ module.exports = {
   },
 
   updateCategory(req, res) {
-    let data = {
-      categories_name: req.body.categories_name,
-      categories_code: req.body.categories_code,
-      categories_description: req.body.categories_description,
-      user_id: req.body.user_id,
-    };
+    let category_id = req.params.id;
+
+    let category_name = req.body.category_name;
+    let category_code = req.body.category_code;
+    let description = req.body.description;
+    let archived = req.body.archived;
+    let user_id = req.body.user_id;
+
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `UPDATE categories SET ? WHERE category_id = ${req.params.id}`,
-          data,
+          `SELECT c.* FROM categories c WHERE c.category_id = ${category_id}`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
                 error: "ERROR",
-                message: `Update Category failed`,
+                message: `Category was not found`,
               });
             } else {
-              res.json({
-                data: rows,
-              });
+              if (rows.length === 0) {
+                res.status(404).json({
+                  error: "CATEGORY_NOT_FOUND",
+                  message: `Category was not found`,
+                });
+                return;
+              }
+
+              if (
+                typeof category_name === "undefined" ||
+                category_name === ""
+              ) {
+                category_name = rows[0].category_name;
+              }
+
+              if (
+                typeof category_code === "undefined" ||
+                category_code === ""
+              ) {
+                category_code = rows[0].category_code;
+              }
+
+              if (typeof description === "undefined" || description === "") {
+                description = rows[0].description;
+              }
+
+              if (typeof archived === "undefined" || archived === "") {
+                archived = rows[0].archived;
+              }
+
+              if (typeof user_id === "undefined" || user_id === "") {
+                user_id = rows[0].user_id;
+              }
+
+              conn.query(
+                `UPDATE categories c 
+              SET c.category_name = '${category_name}', c.category_code = '${category_code}', c.description = '${description}', c.update_time = NOW(), c.user_id = '${user_id}'  
+              WHERE c.category_id = ${category_id}`,
+                (error, rows) => {
+                  if (error) {
+                    res.status(404).json({
+                      error: "ERROR",
+                      message: `Update Category failed`,
+                    });
+                  } else {
+                    res.json({
+                      data: rows,
+                      message: "Update Category Success",
+                    });
+                  }
+                }
+              );
             }
           }
         );
@@ -141,11 +200,38 @@ module.exports = {
   },
 
   deleteCategory(req, res) {
+    let category_id = req.params.id;
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `DELETE FROM categories WHERE category_id = ${req.params.id}`,
+          `
+          DELETE FROM news WHERE category_id = ${category_id}`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `Delete News failed`,
+              });
+            }
+          }
+        );
+
+        conn.query(
+          `
+          DELETE FROM sub_categories WHERE category_id = ${category_id}`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `Delete Sub Category failed`,
+              });
+            }
+          }
+        );
+
+        conn.query(
+          `DELETE FROM categories WHERE category_id = ${category_id}`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -155,6 +241,7 @@ module.exports = {
             } else {
               res.json({
                 data: rows,
+                message: "Delete Category Success",
               });
             }
           }
