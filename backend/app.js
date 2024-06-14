@@ -8,7 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var newsRouter = require("./routes/news");
 var categoryRouter = require("./routes/categories");
-var subcategoryRouter = require("./routes/subcategories");
+var subcategoryRouter = require("./routes/subCategories");
 var commentRouter = require("./routes/comments");
 var authRouter = require("./routes/auth");
 
