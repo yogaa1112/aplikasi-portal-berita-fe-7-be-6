@@ -22,8 +22,9 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT u.user_name 
+          `SELECT u.user_name, u.user_email, r.role_name
           FROM users u
+          JOIN roles r ON u.role_id = r.role_id
           WHERE 
           u.user_email = '${user_email}' AND u.password = SHA1('${password}')`,
           (error, rows) => {

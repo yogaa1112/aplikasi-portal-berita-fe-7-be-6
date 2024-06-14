@@ -77,8 +77,14 @@ module.exports = {
     let user_name = req.body.user_name;
     let user_email = req.body.user_email;
     let password = req.body.password;
-    let image_url = req.body.image_url;
-    let role_id = req.body.role_id;
+    let image_url =
+      typeof req.body.image_url === "undefined" || req.body.image_url === ""
+        ? "nophoto.jpg"
+        : req.body.image_url;
+    let role_id =
+      typeof req.body.role_id === "undefined" || req.body.role_id === ""
+        ? 3
+        : req.body.role_id;
 
     try {
       pool.getConnection((err, conn) => {
@@ -109,7 +115,7 @@ module.exports = {
   },
 
   updateUser(req, res) {
-    let user_id = req.params.id;
+    let user_id = parseInt(req.params.id);
     let user_name = req.body.user_name;
     let user_email = req.body.user_email;
     let password = req.body.password;
@@ -146,7 +152,9 @@ module.exports = {
               }
 
               if (typeof password === "undefined" || password === "") {
-                password = rows[0].password;
+                password = "'" + rows[0].password + "'";
+              } else {
+                password = `SHA1(${password})`;
               }
 
               if (typeof image_url === "undefined" || image_url === "") {
@@ -161,9 +169,19 @@ module.exports = {
                 role_id = rows[0].role_id;
               }
 
+              console.log(
+                user_name,
+                user_email,
+                password,
+                image_url,
+                archived,
+                role_id,
+                user_id
+              );
+
               conn.query(
                 `UPDATE users u
-                SET u.user_name = '${user_name}', u.user_email = '${user_email}', u.password = SHA1('${password}'), u.image_url = '${image_url}', u.archived = '${archived}', u.updated_time = NOW() , u.role_id = '${role_id}'
+                SET u.user_name = '${user_name}', u.user_email = '${user_email}', u.password = ${password}, u.image_url = '${image_url}', u.archived = ${archived}, u.update_time = NOW() , u.role_id = ${role_id}
                 WHERE u.user_id = ${user_id}`,
                 (error, rows) => {
                   if (error) {

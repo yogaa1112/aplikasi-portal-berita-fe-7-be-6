@@ -75,24 +75,22 @@ module.exports = {
   },
 
   addCategory(req, res) {
-    let categories_name = req.body.categories_name;
-    let categories_code = req.body.categories_code;
-    let categories_desc = req.body.categories_desc;
-    let user_id = req.body.user_id;
+    let category_name = req.body.category_name;
+    let category_code = req.body.category_code;
+    let description = req.body.description;
+    let user_id =
+      typeof req.body.user_id === "undefined" || req.body.user_id === ""
+        ? 2
+        : req.body.user_id;
 
-    if (!categories_name || !categories_code || !categories_desc || !user_id)
-      return res.status(400).json({
-        error: "BAD_REQUEST",
-        message:
-          "Category Name, Category Code, Description and User ID is required",
-      });
+    console.log(category_name, category_code, description, user_id);
 
     try {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
           `INSERT INTO categories (category_name, category_code, description, user_id)
-          VALUES ('${categories_name}', '${categories_code}', '${categories_desc}', '${user_id}')`,
+          VALUES ('${category_name}', '${category_code}', '${description}', '${user_id}')`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -116,7 +114,7 @@ module.exports = {
   },
 
   updateCategory(req, res) {
-    let category_id = req.params.id;
+    let category_id = parseInt(req.params.id);
 
     let category_name = req.body.category_name;
     let category_code = req.body.category_code;
