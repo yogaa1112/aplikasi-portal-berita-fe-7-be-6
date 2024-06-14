@@ -1,9 +1,9 @@
 {
-  "name": "capstone-project",
+  "name": "jejak-nusantara",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon node ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
