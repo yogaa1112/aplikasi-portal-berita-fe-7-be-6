@@ -1,7 +1,7 @@
 module.exports = {
   multipleStatements: true,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "jejak_nusantara",
+  host: "educalab.id",
+  user: "blMak7DxHvOzlaap",
+  password: "F7QvfsOj1MbuPD5x",
+  database: "VzQqDikHEecbwsYq",
 };
