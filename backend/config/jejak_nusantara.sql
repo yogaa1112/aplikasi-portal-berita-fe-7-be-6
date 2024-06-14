@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 04, 2024 at 11:59 AM
+-- Generation Time: Jun 14, 2024 at 08:50 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.3.4
 
@@ -81,20 +81,17 @@ CREATE TABLE `news` (
 
 CREATE TABLE `roles` (
   `role_id` int NOT NULL,
-  `role_name` varchar(256) NOT NULL,
-  `archived` tinyint(1) NOT NULL DEFAULT '0',
-  `creation_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `role_name` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`role_id`, `role_name`, `archived`, `creation_time`, `update_time`) VALUES
-(1, 'Super Admin', 0, '2024-06-04 17:59:33', '2024-06-04 17:59:33'),
-(2, 'Admin', 0, '2024-06-04 17:59:33', '2024-06-04 17:59:33'),
-(3, 'User', 0, '2024-06-04 17:59:33', '2024-06-04 17:59:33');
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'Super Admin'),
+(2, 'Admin'),
+(3, 'User');
 
 -- --------------------------------------------------------
 
@@ -138,8 +135,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `password`, `image_url`, `archived`, `creation_time`, `update_time`, `role_id`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '889a3a791b3875cfae413574b53da4bb8a90d53e', 'nophoto.jpg', 0, '2024-06-04 18:08:32', '2024-06-04 18:08:32', 1),
-(2, 'admin', 'admin@gmail.com', 'f865b53623b121fd34ee5426c792e5c33af8c227', 'nophoto.jpg', 0, '2024-06-04 18:08:50', '2024-06-04 18:08:50', 2),
-(3, 'testuser', 'testuser@gmail.com', '45c571a156ddcef41351a713bcddee5ba7e95460', 'nophoto.jpg', 0, '2024-06-04 18:09:08', '2024-06-04 18:09:08', 3);
+(2, 'admin', 'admin@gmail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'nophoto.jpg', 0, '2024-06-04 18:08:50', '2024-06-04 18:08:50', 2);
 
 --
 -- Indexes for dumped tables
@@ -198,19 +194,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `news_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -222,13 +218,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `sub_cat_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `sub_cat_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
