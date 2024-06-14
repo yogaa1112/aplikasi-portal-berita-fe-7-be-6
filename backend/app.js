@@ -10,6 +10,7 @@ var newsRouter = require("./routes/news");
 var categoryRouter = require("./routes/categories");
 var subcategoryRouter = require("./routes/subCategories");
 var commentRouter = require("./routes/comments");
+var roleRouter = require("./routes/roles");
 var authRouter = require("./routes/auth");
 
 var app = express();
@@ -28,5 +29,6 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/subcategories", subcategoryRouter);
 app.use("/api/comments", commentRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/roles", roleRouter);
 
 module.exports = app;
