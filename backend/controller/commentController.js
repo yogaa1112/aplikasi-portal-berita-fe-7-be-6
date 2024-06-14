@@ -80,8 +80,14 @@ module.exports = {
 
   addComment(req, res) {
     let content = req.body.content;
-    let user_id = req.body.user_id;
-    let news_id = req.body.news_id;
+    let user_id =
+      typeof req.body.user_id === "undefined" || req.body.user_id === ""
+        ? 2
+        : req.body.user_id;
+    let news_id =
+      typeof req.body.news_id === "undefined" || req.body.news_id === ""
+        ? 1
+        : req.body.news_id;
 
     try {
       pool.getConnection((err, conn) => {
@@ -112,7 +118,7 @@ module.exports = {
   },
 
   updateComment(req, res) {
-    let comment_id = req.params.id;
+    let comment_id = parseInt(req.params.id);
     let content = req.body.content;
     let archived = req.body.archived;
     let user_id = req.body.user_id;

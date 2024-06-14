@@ -82,8 +82,14 @@ module.exports = {
     let sub_cat_name = req.body.sub_cat_name;
     let sub_cat_code = req.body.sub_cat_code;
     let description = req.body.description;
-    let user_id = req.body.user_id;
-    let category_id = req.body.category_id;
+    let user_id =
+      typeof req.body.user_id === "undefined" || req.body.user_id === ""
+        ? 2
+        : req.body.user_id;
+    let category_id =
+      typeof req.body.category_id === "undefined" || req.body.category_id === ""
+        ? 1
+        : req.body.category_id;
 
     try {
       pool.getConnection((err, conn) => {
@@ -114,7 +120,7 @@ module.exports = {
   },
 
   updateSubCategory(req, res) {
-    let sub_cat_id = req.params.id;
+    let sub_cat_id = parseInt(req.params.id);
     let sub_cat_name = req.body.sub_cat_name;
     let sub_cat_code = req.body.sub_cat_code;
     let description = req.body.description;
@@ -169,7 +175,6 @@ module.exports = {
                 `UPDATE sub_categories s 
                 SET s.sub_cat_name = '${sub_cat_name}', s.sub_cat_code = '${sub_cat_code}', s.description = '${description}', s.archived = '${archived}', s.user_id = '${user_id}', s.category_id = '${category_id}', update_time = NOW() 
                 WHERE sub_cat_id = ${sub_cat_id}`,
-                data,
                 (error, rows) => {
                   if (error) {
                     res.status(404).json({

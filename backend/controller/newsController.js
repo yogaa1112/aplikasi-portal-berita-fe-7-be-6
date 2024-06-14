@@ -82,10 +82,22 @@ module.exports = {
   addNews(req, res) {
     let news_title = req.body.news_title;
     let news_content = req.body.news_content;
-    let image_url = req.body.image_url;
-    let user_id = req.body.user_id;
-    let category_id = req.body.category_id;
-    let sub_cat_id = req.body.sub_cat_id;
+    let image_url =
+      typeof req.body.image_url === "undefined" || req.body.image_url === ""
+        ? "nophoto.jpg"
+        : req.body.image_url;
+    let user_id =
+      typeof req.body.user_id === "undefined" || req.body.user_id === ""
+        ? 2
+        : req.body.user_id;
+    let category_id =
+      typeof req.body.category_id === "undefined" || req.body.category_id === ""
+        ? 1
+        : req.body.category_id;
+    let sub_cat_id =
+      typeof req.body.sub_cat_id === "undefined" || req.body.sub_cat_id === ""
+        ? 1
+        : req.body.sub_cat_id;
 
     try {
       pool.getConnection((err, conn) => {
@@ -116,7 +128,7 @@ module.exports = {
   },
 
   updateNews(req, res) {
-    let news_id = req.params.id;
+    let news_id = parseInt(req.params.id);
     let news_title = req.body.news_title;
     let news_content = req.body.news_content;
     let image_url = req.body.image_url;
