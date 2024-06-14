@@ -1,0 +1,28 @@
+.header{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.date{
+    font-weight: 600;
+    padding: 0px 20px;
+    font-size: 16px;
+}
+
+.tittle {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    padding: 6px 420px;
+}
+
+.icon-profil img{
+    cursor: pointer;
+    aspect-ratio: 1;
+    object-fit: auto;
+    object-position: center;
+    width: 35px;
+    align-self: stretch;
+    margin: auto 0;
+}
