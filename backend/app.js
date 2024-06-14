@@ -5,7 +5,6 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var apiRouter = require("./routes/apis");
 var newsRouter = require("./routes/news");
 var categoryRouter = require("./routes/categories");
 var subcategoryRouter = require("./routes/subcategories");
@@ -21,12 +20,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/api", apiRouter);
-app.use("/news", newsRouter);
-app.use("/categories", categoryRouter);
-app.use("/subcategories", subcategoryRouter);
-app.use("/comments", commentRouter);
-app.use("/auth", authRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/news", newsRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/subcategories", subcategoryRouter);
+app.use("/api/comments", commentRouter);
+app.use("/api/auth", authRouter);
 
 module.exports = app;
