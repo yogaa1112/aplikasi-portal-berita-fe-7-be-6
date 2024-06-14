@@ -135,7 +135,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `password`, `image_url`, `archived`, `creation_time`, `update_time`, `role_id`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '889a3a791b3875cfae413574b53da4bb8a90d53e', 'nophoto.jpg', 0, '2024-06-04 18:08:32', '2024-06-04 18:08:32', 1),
-(2, 'admin', 'admin@gmail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'nophoto.jpg', 0, '2024-06-04 18:08:50', '2024-06-04 18:08:50', 2);
+(2, 'admin', 'admin@gmail.com', 'f865b53623b121fd34ee5426c792e5c33af8c227', 'nophoto.jpg', 0, '2024-06-04 18:08:50', '2024-06-04 18:08:50', 2);
 
 --
 -- Indexes for dumped tables
