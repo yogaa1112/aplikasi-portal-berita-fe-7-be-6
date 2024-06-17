@@ -63,10 +63,10 @@ a {
   position: relative;
 }
 .category1 {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
-  border-left: 5px solid #fe872c;
+  border-left: 5px solid #F1CB83;
   width: auto;
   display: block;
   background: linear-gradient(to right, #4f4f4f 50%, black 50%);

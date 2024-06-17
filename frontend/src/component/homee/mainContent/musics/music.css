@@ -5,6 +5,12 @@
 .music .text {
   padding: 0 30px;
 }
+.music .text .title:hover{
+  color: #F1CB83;
+}
+.music .text .title:active{
+  color: black;
+}
 .music .images {
   width: 320px;
   height: 220px;

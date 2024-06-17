@@ -15,13 +15,13 @@ const Footer = () => {
                 </div>
                 <div className="footer-col">
                     <h4>Kategori:</h4>
-                    <ul className='ul-footer'>
+                    <ul>
                         <li><a href="#olahraga">Olahraga</a></li>
                         <li><a href="#gayahidup">Gaya Hidup</a></li>
                         <li><a href="#ekonomi">Ekonomi</a></li>
-                        <li><a href="#">Wisata</a></li>
-                        <li><a href="#">Otomotif</a></li>
-                        <li><a href="#">Kuliner</a></li>
+                        <li><a href="#wisata">Wisata</a></li>
+                        <li><a href="#otomotif">Otomotif</a></li>
+                        <li><a href="#kuliner">Kuliner</a></li>
                     </ul>
                 </div>
                 <div className="footer-col">

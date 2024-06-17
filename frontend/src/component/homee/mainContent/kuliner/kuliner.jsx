@@ -1,34 +1,26 @@
 import React from "react"
 import Slider from "react-slick"
-import { lifestyle } from "../../../../dummyData"
+import { ppost } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
-
 import "../Ppost/ppost.css"
-//copy ppost code
-const Life = () => {
+import { Link } from "react-router-dom"
+
+// copy same code of popular
+const kuliner = () => {
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 2,
     slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 800,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
   }
   return (
     <>
-      <section className='popularPost life' id="gayahidup">
-        <Heading title='Gaya Hidup' />
+      <section className='popularPost' id="kuliner">
+        <Heading title='kuliner' />
         <div className='content'>
           <Slider {...settings}>
-            {lifestyle.map((val) => {
+            {ppost.map((val) => {
               return (
                 <div className='items'>
                   <div className='box shadow'>
@@ -40,13 +32,14 @@ const Life = () => {
                         <span>{val.catgeory}</span>
                       </div>
                     </div>
-                    <div className='text'>
+                    <Link to='/kuliner'><div className='text'>
                       <h1 className='title'>{val.title.slice(0, 40)}...</h1>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>
                         <label>{val.date}</label>
                       </div>
-                    </div>
+                    </div></Link>
+                    
                   </div>
                 </div>
               )
@@ -58,4 +51,4 @@ const Life = () => {
   )
 }
 
-export default Life
+export default kuliner

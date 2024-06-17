@@ -4,6 +4,9 @@ import Music from "../musics/Music"
 import Popular from "../popular/Popular"
 import Ppost from "../Ppost/Ppost"
 import Side from '../../sideContent/side/Side'
+import Wisata from "../wisata/wisata"
+import Otomotif from "../otomotif/otomotif"
+import Kuliner from "../kuliner/kuliner"
 import "./style.css"
 
 const Homes = () => {
@@ -16,6 +19,9 @@ const Homes = () => {
             <Ppost />
             <Life />
             <Music />
+            <Wisata />
+            <Otomotif />
+            <Kuliner />
           </section>
           <section className='sideContent'>
             <Side />

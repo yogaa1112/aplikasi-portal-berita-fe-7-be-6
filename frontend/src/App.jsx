@@ -5,6 +5,7 @@ import NewsPage from './pages/News/NewsPage';
 import ProfilPage from './pages/Profil/ProfilPage';
 import Homepages from "./pages/Home/Homepages"
 import LoginPage from './pages/LoginRegister/LoginPage'
+import SinglePage from './component/singlePage/SinglePage';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Homepages />} />
         <Route path='/Login' element={<LoginPage />} />
         <Route path="/profil" element={<ProfilPage />}/>
+        <Route path='/singlepage/:id' element={<SinglePage />}/>
       </Routes>
     </Router>
   )

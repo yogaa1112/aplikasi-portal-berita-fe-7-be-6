@@ -1,7 +1,7 @@
 
     .container-footer{
     max-width: 1000px;
-    margin-left: 15%;
+    margin-left: 10%;
     }
     
     .row-footer{
@@ -16,7 +16,7 @@
         padding: 20px 0px;
     }
     .footer-col{
-        width: 33%;
+        width: 35%;
         padding: 0px 49px;
     }
     .footer-col h4{

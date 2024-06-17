@@ -8,3 +8,13 @@
 .popularPost .text {
   padding: 20px;
 }
+.popularPost a {
+  text-decoration: none;
+}
+.popularPost .text:hover {
+  color: #F1CB83;
+}
+.popularPost .text:active{
+  color: black;
+}
+

@@ -5,7 +5,7 @@ import Heading from "../../../heading/Heading"
 
 import "../Ppost/ppost.css"
 //copy ppost code
-const Life = () => {
+const otomotif = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -24,8 +24,8 @@ const Life = () => {
   }
   return (
     <>
-      <section className='popularPost life' id="gayahidup">
-        <Heading title='Gaya Hidup' />
+      <section className='popularPost life' id="otomotif">
+        <Heading title='otomotif' />
         <div className='content'>
           <Slider {...settings}>
             {lifestyle.map((val) => {
@@ -58,4 +58,4 @@ const Life = () => {
   )
 }
 
-export default Life
+export default otomotif

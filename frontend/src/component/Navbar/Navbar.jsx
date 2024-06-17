@@ -1,22 +1,32 @@
-import React from 'react'
-import './Navbar.css'
-import search_icon from '../../assets/search-w.png'
-import logo from '../../assets/logo.jpg'
-
+import React, { useState } from 'react';
+import './Navbar.css';
+import search_icon from '../../assets/search-w.png';
+import logo from '../../assets/logo.jpg';
+import { Link } from "react-router-dom"
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div className='navbar'>
-      <img src={logo} alt="" className='logo'/>
+      <Link to='/'><img src={logo} alt="" className='logo'/></Link>
 
-      <ul>
+      <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+        <div className="hamburger"></div>
+      </div>
+
+      <ul className={menuOpen ? 'open' : ''}>
         <a href="#"><li>News</li></a>
         <a href="#olahraga"><li>Olahraga</li></a>
         <a href="#gayahidup"><li>Gaya Hidup</li></a>
         <a href="#ekonomi"><li>Ekonomi</li></a>
-        <a href="#"><li>Wisata</li></a>
-        <a href="#"><li>Otomotif</li></a>
-        <a href="#"><li>Kuliner</li></a>
+        <a href="#wisata"><li>Wisata</li></a>
+        <a href="#otomotif"><li>Otomotif</li></a>
+        <a href="#kuliner"><li>Kuliner</li></a>
       </ul>
 
       <div className="search-box">
@@ -24,7 +34,7 @@ const Navbar = () => {
         <img src={search_icon} alt="" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;
