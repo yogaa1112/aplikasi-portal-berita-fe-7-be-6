@@ -86,6 +86,54 @@ module.exports = {
     }
   },
 
+  getSubCategoryByQuery(req, res) {
+    let query = typeof req.body.search === "undefined" ? "" : req.body.search;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `SELECT s.*, c.category_name, u.user_name, r.role_name 
+          FROM sub_categories s
+          JOIN categories c ON s.category_id = c.category_id
+          JOIN users u ON s.user_id = u.user_id
+          JOIN roles r ON u.role_id = r.role_id
+          WHERE 
+          s.sub_cat_name LIKE '%${query}%' OR
+          s.sub_cat_code LIKE '%${query}%' OR
+          s.sub_cat_description LIKE '%${query}%' OR
+          c.category_name LIKE '%${query}%' OR
+          u.user_name LIKE '%${query}%'
+          ORDER BY s.creation_time DESC`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              if (rows.length === 0) {
+                res.status(404).json({
+                  error: "SUB_CATEGORY_NOT_FOUND",
+                  message: `Category was not found`,
+                });
+              } else {
+                res.status(200).json({
+                  data: rows,
+                  message: "Sub Category By Query fetched successfully",
+                });
+              }
+            }
+          }
+        );
+        conn.release();
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNA:_SERVER_ERROR", message: error.message });
+    }
+  },
+
   addSubCategory(req, res) {
     let sub_cat_name = req.body.sub_cat_name;
     let sub_cat_code = req.body.sub_cat_code;

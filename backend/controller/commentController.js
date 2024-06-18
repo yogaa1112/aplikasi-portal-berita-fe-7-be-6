@@ -86,6 +86,45 @@ module.exports = {
     }
   },
 
+  getCommentByQuery(req, res) {
+    let query = typeof req.body.search === "undefined" ? "" : req.body.search;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `SELECT c.*, u.user_name, n.news_title, r.role_name
+          FROM comments c 
+          JOIN users u ON c.user_id = u.user_id
+          JOIN news n ON c.news_id = n.news_id
+          JOIN roles r ON u.role_id = r.role_id
+          WHERE 
+          c.content LIKE '%${query}%' OR
+          u.user_name LIKE '%${query}%' OR
+          n.news_title LIKE '%${query}%'
+          ORDER BY c.creation_time DESC`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ITEM_NOT_FOUND",
+                message: `Comment was not found`,
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+                message: "Comments fetched successfully",
+              });
+            }
+          }
+        );
+        conn.release();
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+    }
+  },
+
   addComment(req, res) {
     let content = req.body.content;
     let user_id =

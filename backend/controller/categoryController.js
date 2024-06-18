@@ -84,6 +84,53 @@ module.exports = {
     }
   },
 
+  getCategoryByQuery(req, res) {
+    let query = typeof req.body.search === "undefined" ? "" : req.body.search;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `SELECT c.*, u.user_name, r.role_name
+          FROM categories c
+          JOIN users u ON c.user_id = u.user_id
+          JOIN roles r ON u.role_id = r.role_id
+          WHERE 
+          c.category_name LIKE '%${query}%' OR
+          c.category_code LIKE '%${query}%' OR
+          c.description LIKE '%${query}%' OR
+          u.user_name LIKE '%${query}%' OR
+          r.role_name LIKE '%${query}%'
+          ORDER BY c.creation_time DESC`,
+          (error, rows) => {
+            if (error) {
+              req.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              if (rows.length === 0) {
+                res.status(404).json({
+                  error: "CATEGORY_NOT_FOUND",
+                  message: `Category was not found`,
+                });
+              } else {
+                res.status(200).json({
+                  data: rows,
+                  message: "Category By Query fetched successfully",
+                });
+              }
+            }
+          }
+        );
+        conn.release();
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNA:_SERVER_ERROR", message: error.message });
+    }
+  },
+
   addCategory(req, res) {
     let category_name = req.body.category_name;
     let category_code = req.body.category_code;

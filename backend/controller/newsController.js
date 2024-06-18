@@ -88,10 +88,7 @@ module.exports = {
   },
 
   getNewsByQuery(req, res) {
-    let query =
-      typeof req.body.search === "undefined" || req.body.search === ""
-        ? ""
-        : req.body.search;
+    let query = typeof req.body.search === "undefined" ? "" : req.body.search;
     console.log(query);
     try {
       pool.getConnection((err, conn) => {
@@ -104,12 +101,12 @@ module.exports = {
           JOIN sub_categories s ON n.sub_cat_id = s.sub_cat_id
           JOIN roles r ON u.role_id = r.role_id
           WHERE
-          n.news_title LIKE '%${query}%'
-          OR n.news_content LIKE '%${query}%'
-          OR u.user_name LIKE '%${query}%'
-          OR c.category_name LIKE '%${query}%'
-          OR s.sub_cat_name LIKE '%${query}%'
-          OR r.role_name LIKE '%${query}%'
+          n.news_title LIKE '%${query}%' OR
+          n.news_content LIKE '%${query}%' OR
+          u.user_name LIKE '%${query}%' OR
+          c.category_name LIKE '%${query}%' OR
+          s.sub_cat_name LIKE '%${query}%' OR
+          r.role_name LIKE '%${query}%'
           ORDER BY n.creation_time DESC`,
           (error, rows) => {
             if (error) {

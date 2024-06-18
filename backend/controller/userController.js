@@ -81,6 +81,50 @@ module.exports = {
     }
   },
 
+  getUserByQuery(req, res) {
+    let query = typeof req.body.search === "undefined" ? "" : req.body.search;
+    try {
+      pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(
+          `SELECT u.*, r.role_name 
+          FROM users u JOIN roles r ON u.role_id = r.role_id 
+          WHERE
+          u.user_name LIKE '%${query}%' OR
+          u.user_email LIKE '%${query}%' OR
+          r.role_name LIKE '%${query}%'
+          ORDER BY u.creation_time DESC`,
+          (error, rows) => {
+            if (error) {
+              res.status(404).json({
+                error: "ERROR",
+                message: `There's something wrong with the Server`,
+              });
+            } else {
+              if (rows.length === 0) {
+                res.status(404).json({
+                  error: "USER_NOT_FOUND",
+                  message: `User was not found`,
+                });
+              } else {
+                res.status(200).json({
+                  data: rows,
+                  message: "User By Query fetched successfully",
+                });
+              }
+            }
+          }
+        );
+        conn.release();
+      });
+    } catch (errors) {
+      res
+        .status(500)
+        .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+      console.error("Error: ", errors);
+    }
+  },
+
   addUser(req, res) {
     let user_name = req.body.user_name;
     let user_email = req.body.user_email;
