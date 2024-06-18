@@ -18,11 +18,13 @@ module.exports = {
               message: `Role was not found`,
             });
           } else {
-            res.json({
+            res.status(200).json({
               data: rows,
+              message: "Roles fetched successfully",
             });
           }
         });
+        conn.release();
       });
     } catch (errors) {
       res
@@ -53,13 +55,15 @@ module.exports = {
                   message: `Role was not found`,
                 });
               } else {
-                res.json({
+                res.status(200).json({
                   data: rows,
+                  message: "Role fetched successfully",
                 });
               }
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res

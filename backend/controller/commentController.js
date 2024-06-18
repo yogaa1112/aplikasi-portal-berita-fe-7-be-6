@@ -13,10 +13,12 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT c.*, u.user_name, n.news_title
+          `SELECT c.*, u.user_name, n.news_title, r.role_name
           FROM comments c 
           JOIN users u ON c.user_id = u.user_id
-          JOIN news n ON c.news_id = n.news_id`,
+          JOIN news n ON c.news_id = n.news_id
+          JOIN roles r ON u.role_id = r.role_id
+          ORDER BY c.creation_time DESC`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -24,12 +26,14 @@ module.exports = {
                 message: `Comment was not found`,
               });
             } else {
-              res.json({
+              res.status(200).json({
                 data: rows,
+                message: "Comments fetched successfully",
               });
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -44,12 +48,14 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT c.*, u.user_name, n.news_title
+          `SELECT c.*, u.user_name, n.news_title, r.role_name
           FROM comments c 
           JOIN users u ON c.user_id = u.user_id
           JOIN news n ON c.news_id = n.news_id
+          JOIN roles r ON u.role_id = r.role_id
           WHERE 
-          c.comment_id = ${search}`,
+          c.comment_id = ${search}
+          ORDER BY c.creation_time DESC`,
           (error, rows) => {
             if (error) {
               req.status(404).json({
@@ -63,13 +69,15 @@ module.exports = {
                   message: `Comment was not found`,
                 });
               } else {
-                res.json({
+                res.status(200).json({
                   data: rows,
+                  message: "Comment fetched successfully",
                 });
               }
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -109,6 +117,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -181,6 +190,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -210,6 +220,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res

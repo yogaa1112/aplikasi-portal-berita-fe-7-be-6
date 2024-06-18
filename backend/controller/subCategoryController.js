@@ -13,10 +13,12 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT s.*, c.category_name, u.user_name 
+          `SELECT s.*, c.category_name, u.user_name, r.role_name 
           FROM sub_categories s
           JOIN categories c ON s.category_id = c.category_id
-          JOIN users u ON s.user_id = u.user_id`,
+          JOIN users u ON s.user_id = u.user_id
+          JOIN roles r ON u.role_id = r.role_id
+          ORDER BY s.creation_time DESC`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -24,12 +26,14 @@ module.exports = {
                 message: `Sub Category was not found`,
               });
             } else {
-              res.json({
+              res.status(200).json({
                 data: rows,
+                message: "Sub Categories fetched successfully",
               });
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -44,12 +48,14 @@ module.exports = {
       pool.getConnection((err, conn) => {
         if (err) throw err;
         conn.query(
-          `SELECT s.*, c.category_name, u.user_name 
+          `SELECT s.*, c.category_name, u.user_name, r.role_name 
           FROM sub_categories s
           JOIN categories c ON s.category_id = c.category_id
           JOIN users u ON s.user_id = u.user_id
+          JOIN roles r ON u.role_id = r.role_id
           WHERE 
-          s.category_id = ${search}`,
+          s.category_id = ${search}
+          ORDER BY s.creation_time DESC`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -63,13 +69,15 @@ module.exports = {
                   message: `Category was not found`,
                 });
               } else {
-                res.json({
+                res.status(200).json({
                   data: rows,
+                  message: "Sub Category By Id fetched successfully",
                 });
               }
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -111,6 +119,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -192,6 +201,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -232,6 +242,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res

@@ -48,6 +48,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -107,6 +108,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res

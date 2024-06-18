@@ -14,7 +14,8 @@ module.exports = {
         if (err) throw err;
         conn.query(
           `SELECT u.*, r.role_name
-          FROM users u JOIN roles r ON r.role_id = u.role_id`,
+          FROM users u JOIN roles r ON r.role_id = u.role_id
+          ORDER BY u.creation_time DESC`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -22,17 +23,20 @@ module.exports = {
                 message: `User was not found`,
               });
             } else {
-              res.json({
+              res.status(200).json({
                 data: rows,
+                message: "Users fetched successfully",
               });
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
         .status(500)
         .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+      console.error("Error: ", errors);
     }
   },
 
@@ -44,7 +48,8 @@ module.exports = {
         conn.query(
           `SELECT u.*, r.role_name 
           FROM users u JOIN roles r ON u.role_id = r.role_id 
-          WHERE u.user_id = ${search}`,
+          WHERE u.user_id = ${search}
+          ORDER BY u.creation_time DESC`,
           (error, rows) => {
             if (error) {
               res.status(404).json({
@@ -58,18 +63,21 @@ module.exports = {
                   message: `User was not found`,
                 });
               } else {
-                res.json({
+                res.status(200).json({
                   data: rows,
+                  message: "User By Id fetched successfully",
                 });
               }
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
         .status(500)
         .json({ error: "INTERNAL_SERVER_ERROR", messgae: error.message });
+      console.error("Error: ", errors);
     }
   },
 
@@ -200,6 +208,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res
@@ -277,6 +286,7 @@ module.exports = {
             }
           }
         );
+        conn.release();
       });
     } catch (errors) {
       res

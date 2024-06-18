@@ -4,6 +4,7 @@ let news = require("../controller/newsController");
 
 /* GET home page. */
 router.get("/", news.getAllNews);
+router.post("/", news.getNewsByQuery);
 router.get("/:id", news.getNewsById);
 router.post("/add", news.addNews);
 router.put("/update/:id", news.updateNews);
