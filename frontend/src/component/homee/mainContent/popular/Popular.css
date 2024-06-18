@@ -17,8 +17,13 @@
   object-fit: cover;
 }
 .popular .text h1 {
+  text-decoration: none !important;
   padding: 20px 0 0 20px;
   margin: 0;
+}
+.popular .text a{
+  text-decoration: none;
+  color: black;
 }
 .popular .text h1:hover{
   color: #F1CB83;

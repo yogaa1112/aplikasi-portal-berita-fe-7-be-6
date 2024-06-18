@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { hero } from "../../dummyData"
-import Side from "../homee/sideContent/Tpost/Tpost"
-import "../homee/mainContent/homes/style.css"
-import "./singlepage.css"
-import "../homee/sideContent/side/side.css"
-import Navbar from "../Navbar/Navbar"
-import Tanggal from "../Header/Tanggal"
-import Footer from "../Footer/Footer"
+import { Kuliner } from "../../../dummyData"
+import Side from "../../homee/sideContent/Tpost/Tpost"
+import "../../homee/mainContent/homes/style.css"
+import "../singlepage.css"
+import "../../homee/sideContent/side/side.css"
+import Navbar from "../../Navbar/Navbar"
+import Tanggal from "../../Header/Tanggal"
+import Footer from "../../Footer/Footer"
 
 
-const SinglePage = () => {
+const KulinerPage = () => {
   const { id } = useParams()
   const [item, setItem] = useState(null)
 
   useEffect(() => {
-    const item = hero.find((item) => item.id === parseInt(id))
+    const item = Kuliner.find((item) => item.id === parseInt(id))
     window.scrollTo(0, 0)
     if (item) {
       setItem(item)
@@ -84,4 +84,4 @@ const SinglePage = () => {
   )
 }
 
-export default SinglePage
+export default KulinerPage

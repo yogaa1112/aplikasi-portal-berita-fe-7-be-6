@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { popular } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
+import { Link } from "react-router-dom"
 
 const Popular = () => {
   const settings = {
@@ -47,7 +48,7 @@ const Popular = () => {
                       </div>
                     </div>
                     <div className='text row'>
-                      <h1 className='title'>{val.title.slice(0, 40)}...</h1>
+                    <Link to={`/popular/${val.id}`}><h1 className='title'>{val.title.slice(0, 40)}...</h1></Link>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>
                         <label>{val.date}</label>

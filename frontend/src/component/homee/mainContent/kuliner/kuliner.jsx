@@ -1,6 +1,6 @@
 import React from "react"
 import Slider from "react-slick"
-import { ppost } from "../../../../dummyData"
+import { Kuliner } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
 import "../Ppost/ppost.css"
 import { Link } from "react-router-dom"
@@ -20,7 +20,7 @@ const kuliner = () => {
         <Heading title='kuliner' />
         <div className='content'>
           <Slider {...settings}>
-            {ppost.map((val) => {
+            {Kuliner.map((val) => {
               return (
                 <div className='items'>
                   <div className='box shadow'>
@@ -32,7 +32,7 @@ const kuliner = () => {
                         <span>{val.catgeory}</span>
                       </div>
                     </div>
-                    <Link to='/kuliner'><div className='text'>
+                    <Link to={`/kuliner/${val.id}`}><div className='text'>
                       <h1 className='title'>{val.title.slice(0, 40)}...</h1>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>

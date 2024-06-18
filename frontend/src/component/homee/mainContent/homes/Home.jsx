@@ -18,7 +18,6 @@ const Homes = () => {
             <Popular />
             <Ppost />
             <Life />
-            <Music />
             <Wisata />
             <Otomotif />
             <Kuliner />
