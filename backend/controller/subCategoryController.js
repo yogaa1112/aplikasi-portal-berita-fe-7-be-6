@@ -100,7 +100,7 @@ module.exports = {
           WHERE 
           s.sub_cat_name LIKE '%${query}%' OR
           s.sub_cat_code LIKE '%${query}%' OR
-          s.sub_cat_description LIKE '%${query}%' OR
+          s.description LIKE '%${query}%' OR
           c.category_name LIKE '%${query}%' OR
           u.user_name LIKE '%${query}%'
           ORDER BY s.creation_time DESC`,
