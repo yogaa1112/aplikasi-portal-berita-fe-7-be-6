@@ -42,6 +42,7 @@ module.exports = {
               } else {
                 res.json({
                   data: rows,
+                  status: "success",
                   message: "Login success",
                 });
               }
@@ -99,6 +100,7 @@ module.exports = {
                       });
                     } else {
                       res.json({
+                        status: "success",
                         message: "Register success",
                       });
                     }
@@ -119,6 +121,7 @@ module.exports = {
 
   logoutUser(req, res) {
     res.json({
+      status: "success",
       message: "Logout success",
     });
   },
