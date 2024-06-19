@@ -2,6 +2,7 @@ import React from "react"
 import Slider from "react-slick"
 import { ppost } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
+import { Link } from "react-router-dom"
 import "./ppost.css"
 
 // copy same code of popular
@@ -32,7 +33,7 @@ const Ppost = () => {
                       </div>
                     </div>
                     <div className='text'>
-                      <h1 className='title'>{val.title.slice(0, 40)}...</h1>
+                      <Link to={`/olahraga/${val.id}`}><h1 className='title'>{val.title.slice(0, 40)}...</h1></Link>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>
                         <label>{val.date}</label>

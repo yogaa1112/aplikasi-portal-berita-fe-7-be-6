@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Navbar.css';
 import search_icon from '../../assets/search-w.png';
 import logo from '../../assets/logo.jpg';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="hamburger"></div>
       </div>
 
-      <ul className={menuOpen ? 'open' : ''}>
+      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
         <a href="#"><li>News</li></a>
         <a href="#olahraga"><li>Olahraga</li></a>
         <a href="#gayahidup"><li>Gaya Hidup</li></a>

@@ -16,6 +16,16 @@
 .tpost h1 {
   font-size: 15px;
 }
+.tpost a {
+  text-decoration: none;
+  color: black;
+}
+.tpost .text h1:hover{
+  color: #F1CB83;
+}
+.tpost .text h1:active{
+  color: black;
+}
 .tpost span {
   font-size: 12px;
   color: grey;

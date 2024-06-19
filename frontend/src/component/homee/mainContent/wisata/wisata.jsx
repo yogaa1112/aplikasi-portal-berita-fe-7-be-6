@@ -1,7 +1,8 @@
 import React from "react"
 import Slider from "react-slick"
-import { lifestyle } from "../../../../dummyData"
+import { Wisata } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
+import { Link } from "react-router-dom"
 
 import "../Ppost/ppost.css"
 //copy ppost code
@@ -28,7 +29,7 @@ const wisata = () => {
         <Heading title='wisata' />
         <div className='content'>
           <Slider {...settings}>
-            {lifestyle.map((val) => {
+            {Wisata.map((val) => {
               return (
                 <div className='items'>
                   <div className='box shadow'>
@@ -41,7 +42,7 @@ const wisata = () => {
                       </div>
                     </div>
                     <div className='text'>
-                      <h1 className='title'>{val.title.slice(0, 40)}...</h1>
+                      <Link to={`/wisata/${val.id}`}><h1 className='title'>{val.title.slice(0, 40)}...</h1></Link>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>
                         <label>{val.date}</label>

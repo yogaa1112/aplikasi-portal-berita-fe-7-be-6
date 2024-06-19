@@ -1,6 +1,7 @@
 import React from "react"
 import { tpost } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
+import { Link } from "react-router-dom"
 import "./tpost.css"
 
 const Tpost = () => {
@@ -15,7 +16,7 @@ const Tpost = () => {
                 <img src={val.cover} alt='' />
               </div>
               <div className='text'>
-                <h1 className='title'>{val.title.slice(0, 35)}...</h1>
+                <Link to={`/terkini/${val.id}`}><h1 className='title'>{val.title.slice(0, 35)}...</h1></Link>
                 <span>a year ago</span>
               </div>
             </div>

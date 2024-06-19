@@ -10,6 +10,13 @@
 }
 .popularPost a {
   text-decoration: none;
+  color: black;
+}
+.popularPost .text h1:hover{
+  color: #F1CB83;
+}
+.popularPost .text h1:active{
+  color: black;
 }
 .popularPost .text:hover {
   color: #F1CB83;

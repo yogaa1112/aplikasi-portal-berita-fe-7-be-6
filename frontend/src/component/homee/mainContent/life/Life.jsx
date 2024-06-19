@@ -2,6 +2,7 @@ import React from "react"
 import Slider from "react-slick"
 import { lifestyle } from "../../../../dummyData"
 import Heading from "../../../heading/Heading"
+import { Link } from "react-router-dom"
 
 import "../Ppost/ppost.css"
 //copy ppost code
@@ -41,7 +42,7 @@ const Life = () => {
                       </div>
                     </div>
                     <div className='text'>
-                      <h1 className='title'>{val.title.slice(0, 40)}...</h1>
+                      <Link to={`/gayahidup/${val.id}`}><h1 className='title'>{val.title.slice(0, 40)}...</h1></Link>
                       <div className='date'>
                         <i class='fas fa-calendar-days'></i>
                         <label>{val.date}</label>
