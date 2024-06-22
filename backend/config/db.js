@@ -4,4 +4,5 @@ module.exports = {
   user: "blMak7DxHvOzlaap",
   password: "F7QvfsOj1MbuPD5x",
   database: "VzQqDikHEecbwsYq",
+  port: 3307,
 };
