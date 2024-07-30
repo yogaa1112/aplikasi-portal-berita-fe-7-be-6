@@ -26,7 +26,7 @@ const LifePage = () => {
     <>
       {item ? (
         <main>
-          <Tanggal />
+         
           <Navbar />
           <div className='container'>
             <section className='mainContent details'>

@@ -9,7 +9,7 @@ import Footer from "../../component/Footer/Footer"
 const Homepages = () => {
   return (
     <>
-      <Tanggal />
+      
       <Navbar />
       <Hero />
       <Homes />

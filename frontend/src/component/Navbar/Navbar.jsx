@@ -29,10 +29,7 @@ const Navbar = () => {
         <a href="#kuliner"><li>Kuliner</li></a>
       </ul>
 
-      <div className="search-box">
-        <input type="text" placeholder='Search' />
-        <img src={search_icon} alt="" />
-      </div>
+      
     </div>
   );
 };
